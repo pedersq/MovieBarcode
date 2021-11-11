@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Movie Barcode Generator</title>
+  </head>
+  <body>
+
+    <header>
+      <div id="title" style="float: left ">
+        Movie Barcode
+      </div>
+      <nav style="float: right">
+        <a href="#">Create</a>
+        <a href="browse">Browse</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <div class="center">
+      <form id="youtube-form" action="index.html" method="post" onsubmit="">
+        <label for="youtube-link">Link:</label>
+        <input id="linkbox" value="" type="text" name="youtube-link" size="30">
+        <script src="{{ url_for('static', filename='js/test.js') }}"></script>
+        <button id="submitbutton" type="button" onclick="update_video_thumbnail()">SUBMIT</button>
+      </form>
+
+    </div>
+
+    <div class="center" id="video-info">
+        <img id="currentvid" src="http://img.youtube.com/vi/V2dKIrL05OQ/mqdefault.jpg" alt="" style="float: left; display: inline-block;">
+        <div id="vid-details">
+          <h1 id="vid-title" style="margin-top: 0%;">"YOU STUPID PSEUDO-PROGRESSIVE DUMBF-" | Vaush Goes To War w/ His Chat</h1>
+          <p id="vid-description">Destiny reacts to Vaush versus his own chat on monogamy hot take... Date streamed: 3 Nov, 2021 Follow Destiny ►STREAM - http://www.destiny.gg/bigscreen ►DISCORD - https://discordapp.com/invite/destiny ►REDDIT - https://www.reddit.com/r/Destiny ►INSTAGRAM - https://www.instagram.com/destiny ►MERCH - https://shop.destiny.gg/ Legion - Jeff Russo (INTRO SONG) Check Out My Amazon: https://www.amazon.com/shop/destiny Buy My Merch: https://shop.destiny.gg/ #Destiny</p>
+          <button onclick="$('#generate-info').css('display','inline-block')" type="button" name="button">Select Video</button>
+        </div>
+    </div>
+
+    <div id="generate-info" class="center">
+        <form id="barcode-form" action="index.html" method="post">
+          <label for="vid-duration">Video Duration (s):</label>
+          <input id="vid-duration" type="number" class="barcode-settings" name="vid-duration" value="" readonly>
+          <br>
+          <label for="width">Total Samples:</label>
+          <input id="totalsamples" class="barcode-settings" type="number" name="width" min="1" max="1280" value="720">
+          <br>
+          <label for="seconds-per-sample">Seconds / Sample:</label>
+          <input id="seconds-per-sample" class="barcode-settings" type="number" name="samples-per-second" value="" readonly>
+        </form>
+        <script type="text/javascript">
+          var samples_per_second = document.getElementById('seconds-per-sample');
+          var vid_duration = document.getElementById('vid-duration');
+          document.getElementById('totalsamples').addEventListener('change', function() {
+            samples_per_second.value = vid_duration.value / this.value;
+          });
+        </script>
+        <button onclick="genImage()" id="generate" type="button" name="button">GENERATE</button>
+
+    </div>
+
+    <div id="final-img-div" class="center">
+      <div id="loader"></div>
+      <img id="final_img" src="" alt="">
+    </div>
+
+
+
+  </body>
+</html>
